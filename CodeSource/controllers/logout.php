@@ -1,12 +1,10 @@
 <?php
 session_start();
 
-require_once "../config/Connexion.php";
-require_once "../models/Utilisateur.php";
+session_unset();
+session_destroy();
 
-$pdo = new Connexion();
-$utilisateur = new Utilisateur($pdo);
-
-$utilisateur->seDeconnecter();
+header("Location: ../views/login.php");
+exit;
 
 ?>

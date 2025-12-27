@@ -11,8 +11,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $utulisateur->setEmail($_POST["email"]);
     $utulisateur->setMdpHash($_POST["password"]);
     $utulisateur->setRole($_POST["role"]);
-
-    $res = $utulisateur->sInscrire();
+    
+    $res = $utulisateur->inscrire();
     if($res === false){
         $_SESSION['erreur'] = "Cet email existe déjà !";
         header("Location: ../views/register.php");

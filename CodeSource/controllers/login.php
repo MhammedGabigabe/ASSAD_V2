@@ -9,16 +9,31 @@ $utilisateur = new Utilisateur($pdo);
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $utilisateur->setEmail($_POST["email"]);
     $utilisateur->setMdpHash($_POST["password"]);
-    $res = $utilisateur->seConnecter();
+    $res = $utilisateur->connecter();
 
     if($res === "email_incorrect"){
         $_SESSION['erreur'] = " Email est inccorect !";
+        header("Location: ../views/login.php");
+        exit;
     }elseif($res === "mdp_incorrect"){
         $_SESSION['erreur'] = " Mot de passe est inccorect !";
+        header("Location: ../views/login.php");
+        exit;
     }else{
+        unset($_SESSION['erreur']);
         $_SESSION['email'] = $res['email'];
         $_SESSION['role'] = $res['role'];
-        
+        switch($res['role']){
+            case 'Admin': 
+                header("Location: ../views/dashboardAdmin.php");
+                break;
+            case 'Guide': 
+                header("Location: ../views/dashboardGuide.php");
+                break;
+            default : 
+                header("Location: ../../index.php");
+                break;
+        }
     }
 
 }

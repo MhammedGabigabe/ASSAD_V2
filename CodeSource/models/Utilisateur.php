@@ -57,7 +57,7 @@ class Utilisateur{
         
     }
 
-    public function sInscrire(){
+    public function inscrire(){
         $result = $this->getByEmail($this->email);
         if($result === false){
             $requete = "INSERT INTO `utilisateurs`( `nom`, `email`, `role`, `mdp_hash`)
@@ -77,7 +77,7 @@ class Utilisateur{
         }
     }
 
-    public function seConnecter(){
+    public function connecter(){
 
         $result = $this->getByEmail($this->email);
         if($result === false){
@@ -90,14 +90,6 @@ class Utilisateur{
 
         return $result;
             
-    }
-
-    public function seDeconnecter(){
-        // session_unset();
-        // session_destroy();
-        // header("Location: ../views/login.php");
-        // exit;
-
     }
 
     public function getAll(){
