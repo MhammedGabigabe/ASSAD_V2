@@ -119,7 +119,32 @@ class Animal {
         }
     }
 
-    public function modifier() {
+    public function getById($id){
+        $requete = "SELECT * FROM animaux WHERE id_animal = :id;";
+        $stmt = $this->pdo->getConnexion()->prepare($requete);
+        $stmt->bindParam(":id", $id);
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        else return false;
+    }
+
+    public function modifier($nom, $esp, $ali, $img, $pays, $desc, $idH, $idA) {
+        $requete = "UPDATE animaux 
+                    SET nom = :n,espece = :e,alimentation = :a,image= :i,pays_origine= :p,description_courte = :d,id_habitat = :idH 
+                    WHERE id_animal= :idA;";
+        $stmt = $this->pdo->getConnexion()->prepare($requete);
+        $stmt->bindParam(":n", $nom);
+        $stmt->bindParam(":e", $esp);
+        $stmt->bindParam(":a", $ali);
+        $stmt->bindParam(":i", $img);
+        $stmt->bindParam(":p", $pays);
+        $stmt->bindParam(":d", $desc);
+        $stmt->bindParam(":idH", $idH);
+        $stmt->bindParam(":idA", $idA);
+        if($stmt->execute()){
+            return true;
+        }else return false;
 
     }
 
