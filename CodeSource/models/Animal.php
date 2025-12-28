@@ -72,7 +72,7 @@ class Animal {
 
 
     public function getAll() {
-        $requete = "SELECT * FROM animaux;";
+        $requete = "SELECT a.*,ha.nom AS habitat FROM animaux a INNER JOIN habitats ha ON a.id_habitat = ha.id_habitat;";
         $stmt = $this->pdo->getConnexion()->prepare($requete);
         $stmt->execute();
 
@@ -101,14 +101,37 @@ class Animal {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function __toString() {
-        return $this->nomAnimal . " (" . $this->espece . ")";
+    public function ajouter($nom, $espece, $alimentation, $image, $pays_origine, $description_courte, $id_habitat) {
+        $requete = "INSERT INTO animaux( nom, espece, alimentation, image, pays_origine, description_courte, id_habitat) 
+                    VALUES (:nom,:espece,:alimentation,:image,:pays_origine,:description_courte,:id_habitat)";
+        $stmt = $this->pdo->getConnexion()->prepare($requete);
+        $stmt->bindParam(":nom", $nom);
+        $stmt->bindParam(":espece", $espece);
+        $stmt->bindParam(":alimentation", $alimentation);
+        $stmt->bindParam(":image", $image);
+        $stmt->bindParam(":pays_origine", $pays_origine);
+        $stmt->bindParam(":description_courte", $description_courte);
+        $stmt->bindParam(":id_habitat", $id_habitat);
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    
-    public function ajouter() {}
-    public function modifier() {}
-    public function supprimer() {}
+    public function modifier() {
+
+    }
+
+    public function supprimer($id) {
+        $requete = "DELETE FROM animaux WHERE id_animal = :id;";
+        $stmt = $this->pdo->getConnexion()->prepare($requete);
+        $stmt->bindParam(":id", $id);
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
 
 }
 
