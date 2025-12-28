@@ -1,3 +1,7 @@
+<?php
+require_once "CodeSource/controllers/animal.php";
+require_once "CodeSource/controllers/habitat.php";
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -33,7 +37,7 @@
                 <span class="bg-amber-500 text-black px-3 py-1 rounded-full text-sm font-bold mb-4 inline-block">SPÉCIAL CAN 2025 🇲🇦</span>
                 <h1 class="text-5xl font-extrabold mb-4">Rencontrez Asaad, le Roi de l'Atlas</h1>
                 <p class="text-lg mb-6 text-gray-200">Symbole de force et de noblesse, découvrez l'histoire fascinante du Lion de l'Atlas dans notre parcours interactif dédié aux supporters de la Coupe d'Afrique.</p>
-                <a href="code_source/views/ASSAD.php" class="bg-amber-500 text-black px-8 py-3 rounded-full font-bold hover:scale-105 transition transform inline-block">Découvrir la Fiche</a>
+                <a href="CodeSource/views/fiche.php" class="bg-amber-500 text-black px-8 py-3 rounded-full font-bold hover:scale-105 transition transform inline-block">Découvrir la Fiche</a>
             </div>
         </div>
     </header>
@@ -84,10 +88,10 @@
                             <option value="">Tous les habitats</option>
                             <?php
 
-                                // foreach($liste_habitats as $habitat){
-                                //     $selected = (isset($_POST['habitat']) && $_POST['habitat'] == $habitat['id_habitat']) ? 'selected' : '';
-                                //     echo "<option value='{$habitat['id_habitat']}' $selected> {$habitat['nom']}</option>";
-                                // }
+                                foreach($liste_habitat as $habitat){
+                                    $selected = (isset($_POST['habitat']) && $_POST['habitat'] == $habitat['id_habitat']) ? 'selected' : '';
+                                    echo "<option value='{$habitat['id_habitat']}' $selected> {$habitat['nom']}</option>";
+                                }
                             
                             ?>
                         </select>
@@ -97,10 +101,10 @@
                         <select name="pays" class="w-full p-2 rounded-lg border focus:ring-2 focus:ring-emerald-500">
                             <option value="">Tous les pays</option>
                             <?php
-                                // foreach($liste_pays_animaux as $pays){
-                                //     $selected = (isset($_POST['pays']) && $_POST['pays'] == $pays['pays_origine']) ? 'selected' : '';
-                                //     echo "<option value='{$pays['pays_origine']}' $selected> {$pays['pays_origine']}</option>";
-                                // }
+                                foreach($liste_pays as $pays){
+                                    $selected = (isset($_POST['pays']) && $_POST['pays'] == $pays['pays_origine']) ? 'selected' : '';
+                                    echo "<option value='{$pays['pays_origine']}' $selected> {$pays['pays_origine']}</option>";
+                                }
                             ?>
                         </select>
                     </div>
@@ -114,19 +118,19 @@
 
                 <?php
 
-                    //  foreach($liste_animaux as $animal) {
+                     foreach($liste_animaux as $animal) {
                        
-                    //    echo "
-                    //         <div class='group cursor-pointer'>
-                    //             <div class='relative overflow-hidden rounded-2xl mb-3'>
-                    //                 <img src='{$animal['image']}' alt='{$animal['nom']}' class='w-full h-64 object-cover group-hover:scale-110 transition duration-500'>
-                    //                 <div class='absolute bottom-2 left-2 bg-white/90 px-2 py-1 rounded text-xs font-bold text-emerald-800'>{$animal['pays_origine']}</div>
-                    //             </div>
-                    //             <h3 class='font-bold text-lg text-gray-800'>{$animal['nom']}</h3>
-                    //             <p class='text-sm text-gray-500 italic text-emerald-600'>{$animal['espece']}</p>
-                    //         </div>
-                    //     "; 
-                    //  }          
+                       echo "
+                            <div class='group cursor-pointer'>
+                                <div class='relative overflow-hidden rounded-2xl mb-3'>
+                                    <img src='{$animal['image']}' alt='{$animal['nom']}' class='w-full h-64 object-cover group-hover:scale-110 transition duration-500'>
+                                    <div class='absolute bottom-2 left-2 bg-white/90 px-2 py-1 rounded text-xs font-bold text-emerald-800'>{$animal['pays_origine']}</div>
+                                </div>
+                                <h3 class='font-bold text-lg text-gray-800'>{$animal['nom']}</h3>
+                                <p class='text-sm text-gray-500 italic text-emerald-600'>{$animal['espece']}</p>
+                            </div>
+                        "; 
+                     }          
                         
                 ?>
 

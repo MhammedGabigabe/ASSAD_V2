@@ -10,12 +10,15 @@ class Animal {
     private $descripCourte;
     private $idHabitat;
 
+    private $pdo;
+
+    public function __construct($pdo){
+        $this->pdo = $pdo;
+    }
+
 
     public function getIdAnimal() { 
         return $this->idAnimal; 
-    }
-    public function setIdAnimal($id) { 
-        $this->idAnimal = $id; 
     }
 
     public function getNomAnimal() { 
@@ -43,17 +46,70 @@ class Animal {
         return $this->idHabitat; 
     }
     public function setIdHabitat($idHa) { 
-        $this->idHabitat = $idHa; }
+        $this->idHabitat = $idHa; 
+    }
 
-    public function ajouter() {}
-    public function modifier() {}
-    public function supprimer() {}
-    public function getAll() {}
-    public function getById($id) {}
+        public function getImage() { 
+        return $this->image; 
+    }
+    public function setImage($image) { 
+        $this->image = $image; 
+    }
+
+        public function getPaysOrigine() { 
+        return $this->paysOrigine; 
+    }
+    public function setPaysOrigine($paysOrigine) { 
+        $this->paysOrigine = $paysOrigine; 
+    }
+
+        public function getDescripCourte() { 
+        return $this->descripCourte; 
+    }
+    public function setDescripCourte($descripCourte) { 
+        $this->descripCourte = $descripCourte; 
+    }
+
+
+    public function getAll() {
+        $requete = "SELECT * FROM animaux;";
+        $stmt = $this->pdo->getConnexion()->prepare($requete);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllPays() {
+        $requete = "SELECT DISTINCT`pays_origine` FROM `animaux`";
+        $stmt = $this->pdo->getConnexion()->prepare($requete);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function filtrer($pays, $idHabitat){
+        $requete = "SELECT * FROM animaux WHERE 1=1 ";
+        if($idHabitat    != ''){
+            $requete.= " AND id_habitat = '$idHabitat'";
+        }
+        if($pays != ''){
+            $requete.= " AND pays_origine = '$pays'";
+        }
+        $stmt = $this->pdo->getConnexion()->prepare($requete);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function __toString() {
         return $this->nomAnimal . " (" . $this->espece . ")";
     }
+
+    
+    public function ajouter() {}
+    public function modifier() {}
+    public function supprimer() {}
+
 }
 
 ?>

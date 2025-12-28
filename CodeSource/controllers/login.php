@@ -23,13 +23,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         unset($_SESSION['erreur']);
         $_SESSION['email'] = $res['email'];
         $_SESSION['role'] = $res['role'];
+        $_SESSION['statut'] = $res['is_active'];
         switch($res['role']){
             case 'Admin': 
                 header("Location: ../views/dashboardAdmin.php");
                 break;
+
             case 'Guide': 
-                header("Location: ../views/dashboardGuide.php");
-                break;
+                if($res['is_approuve']){
+                    header("Location: ../views/dashboardGuide.php");
+                    break;
+                }else{
+                    header("Location: ../views/guideAttente.php");
+                    break;
+                }
+
             default : 
                 header("Location: ../../index.php");
                 break;
